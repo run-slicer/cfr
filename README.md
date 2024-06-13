@@ -14,6 +14,8 @@ const data = fs.readFileSync("./your/package/HelloWorld.class"); // read a class
 console.log(cfr.api.decompile("your/package/HelloWorld", data));
 ```
 
+Or see the browser-based proof-of-concept in the [docs](./docs) directory.
+
 ## Licensing
 
 The supporting code for this project and the CFR decompiler are licensed under the MIT License

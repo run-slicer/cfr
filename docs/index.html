@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>CFR in TeaVM</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap");
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "JetBrains Mono", monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #000000;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #1e1e1e;
+                --text-color: #cfcfcf;
+            }
+        }
+
+        #file-input {
+            margin-bottom: 20px;
+        }
+
+        #file-content {
+            width: 80%;
+            max-width: 1024px;
+            height: 60vh;
+            padding: 10px;
+            overflow-y: auto;
+            border: 1px solid var(--text-color);
+            border-radius: 5px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            white-space: pre-wrap;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/gh/cephxdev/cfr@main/dist/cfr.min.js"></script>
+</head>
+<body>
+    <input accept=".class" id="file-input" type="file">
+    <div id="file-content"></div>
+
+    <script>
+        main(); // initialize CFR
+        const stripHeader = (s) => {
+            const start = s.indexOf("/*\n");
+            const end = s.indexOf(" */\n");
+
+            if (start >= 0 && end > start) {
+                return s.substring(0, start) + s.substring(end + 4);
+            }
+            return s;
+        };
+
+        const input = document.getElementById("file-input");
+        input.value = null; // clear file input
+        input.addEventListener("change", (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (evt) => {
+                    const name = file.name.substring(0, file.name.indexOf(".class"));
+
+                    const start = Date.now();
+                    console.log(`Decompiling ${name}...`);
+
+                    document.getElementById("file-content").textContent = stripHeader(
+                        api.decompile(name, new Int8Array(evt.target.result))
+                    );
+
+                    console.log(`Decompiled ${name} in ${Date.now() - start}ms.`);
+                };
+
+                reader.readAsArrayBuffer(file);
+            }
+        });
+    </script>
+</body>
+</html>
