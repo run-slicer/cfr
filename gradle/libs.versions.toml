@@ -1,0 +1,10 @@
+[versions]
+cfr = "0.152"
+teavm = "0.10.0"
+
+[libraries]
+cfr = { group = "org.benf", name = "cfr", version.ref = "cfr" }
+teavm-core = { group = "org.teavm", name = "teavm-core", version.ref = "teavm" }
+
+[plugins]
+teavm = { id = "org.teavm", version.ref = "teavm" }
