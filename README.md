@@ -11,7 +11,11 @@ const cfr = require("./cfr.min.js"); // get it from the dist/ directory or jsDel
 cfr.main(); // initialize the API object
 
 const data = fs.readFileSync("./your/package/HelloWorld.class"); // read a class file
-console.log(cfr.api.decompile("your/package/HelloWorld", data));
+console.log(cfr.api.decompile("your.package.HelloWorld", {
+    classes: {
+        "your.package.HelloWorld": data,
+    }
+}));
 ```
 
 Or see the browser-based proof-of-concept in the [docs](./docs) directory.

@@ -1,5 +1,6 @@
 plugins {
     `java-library`
+    alias(libs.plugins.blossom)
     alias(libs.plugins.teavm) // order matters?
 }
 
@@ -38,5 +39,25 @@ tasks {
 
     build {
         dependsOn("copyDist")
+    }
+}
+
+val kotlin.reflect.KClass<*>.bytes: ByteArray
+    get() = (java.classLoader ?: ClassLoader.getSystemClassLoader())
+        .getResourceAsStream(java.name.replace('.', '/') + ".class")!!
+        .use(`java.io`.InputStream::readAllBytes)
+
+val ByteArray.base64String: String
+    get() = `java.util`.Base64.getEncoder().encodeToString(this)
+
+sourceSets {
+    main {
+        blossom {
+            javaSources {
+                property("javaLangObject", Object::class.bytes.base64String)
+                property("javaLangString", String::class.bytes.base64String)
+                property("javaLangSystem", System::class.bytes.base64String)
+            }
+        }
     }
 }
