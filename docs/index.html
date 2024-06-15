@@ -50,14 +50,14 @@
             white-space: pre-wrap;
         }
     </style>
-    <script src="https://cdn.jsdelivr.net/gh/cephxdev/cfr@main/dist/cfr.min.js"></script>
 </head>
 <body>
     <input accept=".class" id="file-input" type="file">
     <div id="file-content"></div>
 
-    <script>
-        main(); // initialize CFR
+    <script type="module">
+        import { decompile } from "https://cdn.jsdelivr.net/gh/cephxdev/cfr@main/dist/cfr.js";
+
         const stripHeader = (s) => {
             const start = s.indexOf("/*\n");
             const end = s.indexOf(" */\n");
@@ -81,11 +81,7 @@
                     console.log(`Decompiling ${name}...`);
 
                     document.getElementById("file-content").textContent = stripHeader(
-                        api.decompile(name, {
-                            classes: {
-                                [name]: new Int8Array(evt.target.result),
-                            },
-                        })
+                        decompile(new Int8Array(evt.target.result), { classes: [] })
                     );
 
                     console.log(`Decompiled ${name} in ${Date.now() - start}ms.`);

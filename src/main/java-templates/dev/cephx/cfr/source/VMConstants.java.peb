@@ -3,9 +3,9 @@ package dev.cephx.cfr.source;
 import java.util.Base64;
 
 final class VMConstants {
-    public static final byte[] JAVA_LANG_OBJECT = Base64.getDecoder().decode("{{ javaLangObject }}");
-    public static final byte[] JAVA_LANG_STRING = Base64.getDecoder().decode("{{ javaLangString }}");
-    public static final byte[] JAVA_LANG_SYSTEM = Base64.getDecoder().decode("{{ javaLangSystem }}");
+    static final byte[] JAVA_LANG_OBJECT = Base64.getDecoder().decode("{{ javaLangObject }}");
+    static final byte[] JAVA_LANG_STRING = Base64.getDecoder().decode("{{ javaLangString }}");
+    static final byte[] JAVA_LANG_SYSTEM = Base64.getDecoder().decode("{{ javaLangSystem }}");
 
     private VMConstants() {
     }

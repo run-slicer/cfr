@@ -6,16 +6,10 @@ A JavaScript port of the [CFR decompiler](https://github.com/leibnitz27/cfr).
 
 ```js
 const fs = require("fs");
-const cfr = require("./cfr.min.js"); // get it from the dist/ directory or jsDelivr
-
-cfr.main(); // initialize the API object
+const { decompile } = require("./cfr.js"); // get it from the dist/ directory or jsDelivr
 
 const data = fs.readFileSync("./your/package/HelloWorld.class"); // read a class file
-console.log(cfr.api.decompile("your.package.HelloWorld", {
-    classes: {
-        "your.package.HelloWorld": data,
-    }
-}));
+console.log(decompile(data, { classes: [] /* no additional classes for analysis */ }));
 ```
 
 Or see the browser-based proof-of-concept in the [docs](./docs) directory.

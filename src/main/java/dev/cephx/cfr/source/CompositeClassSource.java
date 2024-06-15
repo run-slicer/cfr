@@ -6,13 +6,7 @@ import org.benf.cfr.reader.bytecode.analysis.parse.utils.Pair;
 import java.io.IOException;
 import java.util.Collection;
 
-public final class CompositeClassSource implements ClassFileSource {
-    private final ClassFileSource[] sources;
-
-    public CompositeClassSource(ClassFileSource... sources) {
-        this.sources = sources;
-    }
-
+public record CompositeClassSource(ClassFileSource... sources) implements ClassFileSource {
     @Override
     public void informAnalysisRelativePathDetail(String usePath, String classFilePath) {
         for (final ClassFileSource source : this.sources) {

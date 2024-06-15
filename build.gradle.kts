@@ -17,8 +17,13 @@ dependencies {
     compileOnly(libs.teavm.core)
 }
 
+java.toolchain {
+    languageVersion = JavaLanguageVersion.of(21)
+}
+
 teavm.js {
     mainClass = "dev.cephx.cfr.Main"
+    moduleType = org.teavm.gradle.api.JSModuleType.ES2015
     // obfuscated = false
 }
 
@@ -28,13 +33,6 @@ tasks {
 
         from(generateJavaScript)
         into("dist")
-        rename { name ->
-            if (name == "cfr.js" && teavm.js.obfuscated.get()) {
-                return@rename "cfr.min.js"
-            }
-
-            return@rename name
-        }
     }
 
     build {
