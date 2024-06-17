@@ -8,6 +8,9 @@ import org.benf.cfr.reader.api.CfrDriver;
 import org.teavm.jso.JSByRef;
 import org.teavm.jso.JSExport;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 public class Main {
     @JSExport
     public static String decompile(@JSByRef byte[] b, DecompilerOptions options) throws Throwable {
@@ -23,6 +26,13 @@ public class Main {
                         )
                 )
                 .withOutputSink(sinkFactory)
+                .withOptions(
+                        Arrays.stream(options.getOptions())
+                                .collect(Collectors.toMap(
+                                        DecompilerOptions.Option::getName,
+                                        DecompilerOptions.Option::getValue
+                                ))
+                )
                 .build()
                 .analyse(source.names());
 

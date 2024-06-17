@@ -81,7 +81,7 @@
                     console.log(`Decompiling ${name}...`);
 
                     document.getElementById("file-content").textContent = // stripHeader(
-                        decompile(new Int8Array(evt.target.result), { classes: [] });
+                        decompile(new Int8Array(evt.target.result), { classes: [], options: {} });
                     // );
 
                     console.log(`Decompiled ${name} in ${Date.now() - start}ms.`);
