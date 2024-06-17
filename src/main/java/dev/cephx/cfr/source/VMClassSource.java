@@ -35,11 +35,7 @@ public final class VMClassSource implements ClassFileSource {
             name = path.substring(0, extIndex);
         }
 
-        return switch (name) {
-            case "java/lang/Object" -> new Pair<>(VMConstants.JAVA_LANG_OBJECT, path);
-            case "java/lang/String" -> new Pair<>(VMConstants.JAVA_LANG_STRING, path);
-            case "java/lang/System" -> new Pair<>(VMConstants.JAVA_LANG_SYSTEM, path);
-            default -> null;
-        };
+        final byte[] b = VMConstants.CLASSES.get(name);
+        return b != null ? new Pair<>(b, path) : null;
     }
 }

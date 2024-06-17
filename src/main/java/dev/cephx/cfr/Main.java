@@ -8,26 +8,23 @@ import org.benf.cfr.reader.api.CfrDriver;
 import org.teavm.jso.JSByRef;
 import org.teavm.jso.JSExport;
 
-import java.util.List;
-
 public class Main {
     @JSExport
     public static String decompile(@JSByRef byte[] b, DecompilerOptions options) throws Throwable {
         final OutputSinkFactoryImpl sinkFactory = new OutputSinkFactoryImpl();
 
         final var source = new ByteArrayClassSource(b);
-        final var analyzerSource = new ByteArrayClassSource(options.getClasses());
         new CfrDriver.Builder()
                 .withClassFileSource(
                         new CompositeClassSource(
                                 source,
-                                analyzerSource,
+                                new ByteArrayClassSource(options.getClasses()),
                                 VMClassSource.INSTANCE
                         )
                 )
                 .withOutputSink(sinkFactory)
                 .build()
-                .analyse(List.of(source.single()));
+                .analyse(source.names());
 
         return sinkFactory.outputOrThrow();
     }

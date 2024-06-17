@@ -58,15 +58,15 @@
     <script type="module">
         import { decompile } from "https://cdn.jsdelivr.net/gh/cephxdev/cfr@main/dist/cfr.js";
 
-        const stripHeader = (s) => {
-            const start = s.indexOf("/*\n");
-            const end = s.indexOf(" */\n");
-
-            if (start >= 0 && end > start) {
-                return s.substring(0, start) + s.substring(end + 4);
-            }
-            return s;
-        };
+        // const stripHeader = (s) => {
+        //     const start = s.indexOf("/*\n");
+        //     const end = s.indexOf(" */\n");
+        //
+        //     if (start >= 0 && end > start) {
+        //         return s.substring(0, start) + s.substring(end + 4);
+        //     }
+        //     return s;
+        // };
 
         const input = document.getElementById("file-input");
         input.value = null; // clear file input
@@ -80,9 +80,9 @@
                     const start = Date.now();
                     console.log(`Decompiling ${name}...`);
 
-                    document.getElementById("file-content").textContent = stripHeader(
-                        decompile(new Int8Array(evt.target.result), { classes: [] })
-                    );
+                    document.getElementById("file-content").textContent = // stripHeader(
+                        decompile(new Int8Array(evt.target.result), { classes: [] });
+                    // );
 
                     console.log(`Decompiled ${name} in ${Date.now() - start}ms.`);
                 };

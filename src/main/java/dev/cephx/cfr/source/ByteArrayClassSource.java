@@ -45,11 +45,7 @@ public record ByteArrayClassSource(Map<String, byte[]> classes) implements Class
         return data != null ? new Pair<>(data, path) : null;
     }
 
-    public String single() {
-        if (this.classes.size() != 1) {
-            throw new IllegalArgumentException("Expected a single class, got " + this.classes.size());
-        }
-
-        return this.classes.keySet().iterator().next();
+    public List<String> names() {
+        return List.copyOf(classes.keySet());
     }
 }
