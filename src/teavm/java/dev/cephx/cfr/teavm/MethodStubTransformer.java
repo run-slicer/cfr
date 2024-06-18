@@ -15,7 +15,9 @@ public class MethodStubTransformer implements ClassHolderTransformer {
                 this.stubWithNullConstant(cls.getMethod(new MethodDescriptor("getContentByFromReflectedClass", String.class, byte[].class)));
                 this.stubWithBooleanConstant(cls.getMethod(new MethodDescriptor("CheckJrt", boolean.class)), false);
             }
-            case "org.benf.cfr.reader.util.output.LoggerFactory" -> this.stubWithNullConstant(cls.getMethod(new MethodDescriptor("getHandler", Handler.class)));
+            case "org.benf.cfr.reader.util.output.LoggerFactory" -> {
+                this.stubWithNullConstant(cls.getMethod(new MethodDescriptor("getHandler", Handler.class)));
+            }
         }
     }
 

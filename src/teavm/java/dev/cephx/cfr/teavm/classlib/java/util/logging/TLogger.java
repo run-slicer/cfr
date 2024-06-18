@@ -26,7 +26,7 @@ import org.teavm.classlib.java.util.logging.TLevel;
 import org.teavm.classlib.java.util.logging.TLogRecord;
 import org.teavm.jso.JSBody;
 
-// changes: implemented #isLoggable and #setLevel
+// changes: implemented #isLoggable, #setLevel, #addHandler and #setUseParentHandlers
 public class TLogger {
     public static final String GLOBAL_LOGGER_NAME = "global";
     private static TMap<String, TLogger> loggerCache = new THashMap<>();
@@ -289,6 +289,12 @@ public class TLogger {
 
     public void setLevel(TLevel level) {
         this.level = level;
+    }
+
+    public void addHandler(THandler handler) {
+    }
+
+    public void setUseParentHandlers(boolean useParentHandlers) {
     }
 
     @JSBody(params = "message", script = ""

@@ -1,4 +1,4 @@
-package dev.cephx.cfr;
+package dev.cephx.cfr.impl;
 
 import org.benf.cfr.reader.api.ClassFileSource;
 import org.benf.cfr.reader.bytecode.analysis.parse.utils.Pair;
@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.function.Function;
 
-record ClassSourceImpl(Function<String, byte[]> source) implements ClassFileSource {
+public record ClassFileSourceImpl(Function<String, byte[]> source) implements ClassFileSource {
     @Override
     public void informAnalysisRelativePathDetail(String usePath, String classFilePath) {
     }

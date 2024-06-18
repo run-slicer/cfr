@@ -1,28 +1,25 @@
 package dev.cephx.cfr;
 
+import dev.cephx.cfr.impl.ClassFileSourceImpl;
+import dev.cephx.cfr.impl.OutputSinkFactoryImpl;
 import org.benf.cfr.reader.api.CfrDriver;
 import org.teavm.jso.JSExport;
 import org.teavm.jso.core.JSObjects;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Main {
     @JSExport
-    public static String decompile(String name, DecompilerOptions options) throws Throwable {
+    public static String decompile(String name, Options options) throws Throwable {
         return decompile0(name, options == null || JSObjects.isUndefined(options) ? JSObjects.create() : options);
     }
 
-    private static String decompile0(String name, DecompilerOptions options) throws Throwable {
+    private static String decompile0(String name, Options options) throws Throwable {
         final var sinkFactory = new OutputSinkFactoryImpl();
         new CfrDriver.Builder()
-                .withClassFileSource(new ClassSourceImpl(options::source))
+                .withClassFileSource(new ClassFileSourceImpl(options.source()::get))
                 .withOutputSink(sinkFactory)
-                .withOptions(
-                        Arrays.stream(options.getOptions())
-                                .collect(Collectors.toMap(DecompilerOptions.Option::getName, DecompilerOptions.Option::getValue))
-                )
+                .withOptions(options.rawOptions())
                 .build()
                 .analyse(List.of(name));
 

@@ -5,24 +5,32 @@ import org.teavm.jso.JSByRef;
 import org.teavm.jso.JSFunctor;
 import org.teavm.jso.JSObject;
 
-public interface DecompilerOptions extends JSObject {
+import java.util.HashMap;
+import java.util.Map;
+
+public interface Options extends JSObject {
     @JSBody(script = "return this.options ? Object.entries(this.options) : [];")
-    Option[] getOptions();
+    Option[] options();
+
+    default Map<String, String> rawOptions() {
+        final Map<String, String> options = new HashMap<>();
+        for (final Options.Option option : this.options()) {
+            options.put(option.name(), option.value());
+        }
+
+        return options;
+    }
 
     // can't use the logical OR, it breaks the TeaVM minifier
     @JSBody(script = "return this.source ? this.source : (() => { return null; });")
-    Source getSource();
-
-    default byte[] source(String name) {
-        return this.getSource().get(name);
-    }
+    Source source();
 
     interface Option extends JSObject {
         @JSBody(script = "return this[0];")
-        String getName();
+        String name();
 
         @JSBody(script = "return this[1];")
-        String getValue();
+        String value();
     }
 
     @JSFunctor
