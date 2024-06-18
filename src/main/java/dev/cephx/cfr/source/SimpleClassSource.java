@@ -5,12 +5,9 @@ import org.benf.cfr.reader.bytecode.analysis.parse.utils.Pair;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Function;
 
-public record ByteArrayClassSource(String name, byte[] data) implements ClassFileSource {
-    public ByteArrayClassSource(byte[] data) {
-        this(ClassFileUtil.getClassName(data), data);
-    }
-
+public record SimpleClassSource(Function<String, byte[]> source) implements ClassFileSource {
     @Override
     public void informAnalysisRelativePathDetail(String usePath, String classFilePath) {
     }
@@ -34,6 +31,7 @@ public record ByteArrayClassSource(String name, byte[] data) implements ClassFil
             name = path.substring(0, extIndex);
         }
 
-        return this.name.equals(name) ? new Pair<>(this.data, path) : null;
+        final byte[] b = this.source.apply(name);
+        return b != null ? new Pair<>(b, path) : null;
     }
 }

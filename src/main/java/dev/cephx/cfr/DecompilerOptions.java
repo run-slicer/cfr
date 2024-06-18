@@ -2,22 +2,28 @@ package dev.cephx.cfr;
 
 import org.teavm.jso.JSBody;
 import org.teavm.jso.JSByRef;
+import org.teavm.jso.JSFunctor;
 import org.teavm.jso.JSObject;
-import org.teavm.jso.JSProperty;
 
 public interface DecompilerOptions extends JSObject {
-    @JSProperty
-    @JSByRef
-    byte[][] getClasses();
-
-    @JSBody(script = "return Object.entries(this.options).map(e => { return { name: e[0], value: e[1] }; });")
+    @JSBody(script = "return this.options ? Object.entries(this.options) : [];")
     Option[] getOptions();
 
+    // can't use the logical OR, it breaks the TeaVM minifier
+    @JSBody(script = "return this.source ? this.source : (() => { return null; });")
+    Source getSource();
+
     interface Option extends JSObject {
-        @JSProperty
+        @JSBody(script = "return this[0];")
         String getName();
 
-        @JSProperty
+        @JSBody(script = "return this[1];")
         String getValue();
+    }
+
+    @JSFunctor
+    interface Source extends JSObject {
+        @JSByRef
+        byte[] get(String name);
     }
 }

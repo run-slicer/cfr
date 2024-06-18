@@ -1,4 +1,4 @@
-package dev.cephx.cfr.source;
+package dev.cephx.cfr.sink;
 
 import org.benf.cfr.reader.api.OutputSinkFactory;
 
