@@ -1,6 +1,5 @@
 plugins {
     `java-library`
-    alias(libs.plugins.blossom)
     alias(libs.plugins.teavm) // order matters?
 }
 
@@ -37,34 +36,5 @@ tasks {
 
     build {
         dependsOn("copyDist")
-    }
-}
-
-val Class<*>.bytes: ByteArray
-    get() = (classLoader ?: ClassLoader.getSystemClassLoader())
-        .getResourceAsStream(name.replace('.', '/') + ".class")!!
-        .use(`java.io`.InputStream::readAllBytes)
-
-val ByteArray.base64String: String
-    get() = `java.util`.Base64.getEncoder().encodeToString(this)
-
-fun net.kyori.blossom.SourceTemplateSet.classes(vararg klasses: kotlin.reflect.KClass<*>) {
-    properties.put("classes", klasses.associate { klass ->
-        klass.javaObjectType.name to klass.javaObjectType.bytes.base64String
-    })
-}
-
-sourceSets {
-    main {
-        blossom {
-            javaSources {
-                classes(
-                    Object::class, Record::class, Enum::class,
-                    Byte::class, Short::class, Int::class, Long::class,
-                    Float::class, Double::class, Boolean::class, Character::class,
-                    Void::class, String::class
-                )
-            }
-        }
     }
 }

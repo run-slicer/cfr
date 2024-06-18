@@ -1,11 +1,11 @@
-package dev.cephx.cfr.sink;
+package dev.cephx.cfr;
 
 import org.benf.cfr.reader.api.OutputSinkFactory;
 
 import java.util.Collection;
 import java.util.List;
 
-public final class OutputSinkFactoryImpl implements OutputSinkFactory {
+final class OutputSinkFactoryImpl implements OutputSinkFactory {
     private Throwable exception;
     private String output;
 

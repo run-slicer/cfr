@@ -13,6 +13,10 @@ public interface DecompilerOptions extends JSObject {
     @JSBody(script = "return this.source ? this.source : (() => { return null; });")
     Source getSource();
 
+    default byte[] source(String name) {
+        return this.getSource().get(name);
+    }
+
     interface Option extends JSObject {
         @JSBody(script = "return this[0];")
         String getName();

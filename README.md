@@ -9,12 +9,12 @@ const fs = require("fs");
 const { decompile } = require("./cfr.js"); // get it from the dist/ directory or jsDelivr
 
 const data = fs.readFileSync("./your/package/HelloWorld.class"); // read a class file
-console.log(decompile(data, {
+console.log(decompile("your/package/HelloWorld", {
     source: (name) => {
-        /* provide any additional classes for analysis here */
+        /* provide classes for analysis here, including the one you want to decompile */
         
         console.log(name); /* internal name, e.g. java/lang/Object */
-        return null; /* class not available */
+        return name === "your/package/HelloWorld" ? data : null /* class not available */;
     },
     options: {
         /* see https://github.com/leibnitz27/cfr/blob/master/src/org/benf/cfr/reader/util/getopt/OptionsImpl.java#L274 */
