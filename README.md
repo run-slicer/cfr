@@ -28,6 +28,6 @@ Or see the browser-based proof-of-concept in the [docs](./docs) directory.
 ## Licensing
 
 The supporting code for this project and the CFR decompiler are licensed under the MIT License
-([supporting code](./LICENSE), [CFR](https://github.com/leibnitz27/cfr/blob/master/LICENSE)).
+([supporting code](./LICENSE), [CFR](./LICENSE-CFR)).
 
 _This project is not affiliated with, maintained or endorsed by the CFR project in any way. Do NOT report issues with this project to the CFR issue tracker._
