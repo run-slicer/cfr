@@ -10,17 +10,18 @@ import org.teavm.jso.JSByRef;
 import org.teavm.jso.JSExport;
 import org.teavm.jso.core.JSObjects;
 import org.teavm.jso.core.JSPromise;
+import org.teavm.jso.core.JSString;
 import org.teavm.jso.typedarrays.Uint8Array;
 
 import java.util.List;
 
 public class Main {
     @JSExport
-    public static JSPromise<String> decompile(String name, Options options) {
+    public static JSPromise<JSString> decompile(String name, Options options) {
         return decompile0(name, options == null || JSObjects.isUndefined(options) ? JSObjects.create() : options);
     }
 
-    private static JSPromise<String> decompile0(String name, Options options) {
+    private static JSPromise<JSString> decompile0(String name, Options options) {
         return new JSPromise<>((resolve, reject) -> {
             new Thread(() -> {
                 try {
@@ -32,7 +33,7 @@ public class Main {
                             .build()
                             .analyse(List.of(name));
 
-                    resolve.accept(sinkFactory.outputOrThrow());
+                    resolve.accept(JSString.valueOf(sinkFactory.outputOrThrow()));
                 } catch (Throwable e) {
                     reject.accept(e);
                 }
