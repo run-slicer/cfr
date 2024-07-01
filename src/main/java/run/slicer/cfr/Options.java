@@ -1,4 +1,4 @@
-package dev.cephx.cfr;
+package run.slicer.cfr;
 
 import org.teavm.jso.JSBody;
 import org.teavm.jso.JSObject;

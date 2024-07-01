@@ -1,7 +1,7 @@
-package dev.cephx.cfr;
+package run.slicer.cfr;
 
-import dev.cephx.cfr.impl.ClassFileSourceImpl;
-import dev.cephx.cfr.impl.OutputSinkFactoryImpl;
+import run.slicer.cfr.impl.ClassFileSourceImpl;
+import run.slicer.cfr.impl.OutputSinkFactoryImpl;
 import org.benf.cfr.reader.api.CfrDriver;
 import org.teavm.interop.Async;
 import org.teavm.interop.AsyncCallback;

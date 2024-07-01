@@ -1,4 +1,4 @@
-package dev.cephx.cfr.impl;
+package run.slicer.cfr.impl;
 
 import org.benf.cfr.reader.api.OutputSinkFactory;
 

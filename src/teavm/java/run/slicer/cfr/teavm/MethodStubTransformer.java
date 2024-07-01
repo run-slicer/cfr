@@ -1,4 +1,4 @@
-package dev.cephx.cfr.teavm;
+package run.slicer.cfr.teavm;
 
 import org.teavm.model.*;
 import org.teavm.model.instructions.ExitInstruction;
