@@ -38,3 +38,4 @@ bin/
 .DS_Store
 
 obf-sample-test/
+dist/

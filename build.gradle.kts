@@ -3,8 +3,10 @@ plugins {
     alias(libs.plugins.teavm) // order matters?
 }
 
+val thisVersion = "0.1.0"
+
 group = "dev.cephx"
-version = "${libs.versions.cfr.get()}-teavm-SNAPSHOT"
+version = "$thisVersion-${libs.versions.cfr.get()}"
 description = "A JavaScript port of the CFR decompiler."
 
 repositories {
@@ -31,8 +33,30 @@ tasks {
     register<Copy>("copyDist") {
         group = "build"
 
-        from(generateJavaScript)
+        from("README.md", "LICENSE", "LICENSE-CFR", generateJavaScript, "cfr.d.ts")
         into("dist")
+
+        doLast {
+            file("dist/package.json").writeText(
+                """
+                    {
+                      "name": "@run-slicer/cfr",
+                      "version": "${project.version}",
+                      "description": "A JavaScript port of the CFR decompiler (https://github.com/leibnitz27/cfr).",
+                      "main": "cfr.js",
+                      "types": "cfr.d.ts",
+                      "keywords": [
+                        "decompiler",
+                        "java",
+                        "decompilation",
+                        "cfr"
+                      ],
+                      "author": "run-slicer",
+                      "license": "MIT"
+                    }
+                """.trimIndent()
+            )
+        }
     }
 
     build {
