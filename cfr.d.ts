@@ -1,4 +1,4 @@
-declare module "cfr" {
+declare module "@run-slicer/cfr" {
     export type Options = Record<string, string>;
 
     export interface Config {
