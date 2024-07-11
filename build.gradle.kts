@@ -5,7 +5,7 @@ plugins {
 
 val thisVersion = "0.1.0"
 
-group = "dev.cephx"
+group = "run.slicer"
 version = "$thisVersion-${libs.versions.cfr.get()}"
 description = "A JavaScript port of the CFR decompiler."
 
@@ -23,7 +23,7 @@ java.toolchain {
 }
 
 teavm.js {
-    mainClass = "dev.cephx.cfr.Main"
+    mainClass = "run.slicer.cfr.Main"
     moduleType = org.teavm.gradle.api.JSModuleType.ES2015
     // obfuscated = false
     // optimization = org.teavm.gradle.api.OptimizationLevel.NONE

@@ -1,4 +1,4 @@
-package dev.cephx.cfr.teavm;
+package run.slicer.cfr.teavm;
 
 import org.teavm.vm.spi.TeaVMHost;
 import org.teavm.vm.spi.TeaVMPlugin;
