@@ -1,5 +1,6 @@
 package run.slicer.cfr;
 
+import org.teavm.jso.JSExceptions;
 import run.slicer.cfr.impl.ClassFileSourceImpl;
 import run.slicer.cfr.impl.OutputSinkFactoryImpl;
 import org.benf.cfr.reader.api.CfrDriver;
@@ -35,7 +36,7 @@ public class Main {
 
                     resolve.accept(JSString.valueOf(sinkFactory.outputOrThrow()));
                 } catch (Throwable e) {
-                    reject.accept(e);
+                    reject.accept(JSExceptions.getJSException(e));
                 }
             }).start();
         });
@@ -47,7 +48,7 @@ public class Main {
     private static void source0(Options options, String name, AsyncCallback<byte[]> callback) {
         options.source(name)
                 .then(b -> {
-                    callback.complete(unwrapByteArray(b));
+                    callback.complete(b == null || JSObjects.isUndefined(b) ? null : unwrapByteArray(b));
                     return null;
                 })
                 .catchError(err -> {
