@@ -3,7 +3,7 @@ plugins {
     alias(libs.plugins.teavm) // order matters?
 }
 
-val thisVersion = "0.1.4"
+val thisVersion = "0.1.5"
 
 group = "run.slicer"
 version = "$thisVersion-${libs.versions.cfr.get()}"
@@ -11,6 +11,7 @@ description = "A JavaScript port of the CFR decompiler."
 
 repositories {
     mavenCentral()
+    maven("https://teavm.org/maven/repository")
 }
 
 dependencies {
@@ -22,19 +23,29 @@ java.toolchain {
     languageVersion = JavaLanguageVersion.of(21)
 }
 
-teavm.js {
+teavm.wasmGC {
     mainClass = "run.slicer.cfr.Main"
-    moduleType = org.teavm.gradle.api.JSModuleType.ES2015
-    // obfuscated = false
-    // optimization = org.teavm.gradle.api.OptimizationLevel.NONE
+    modularRuntime = true
+    /*obfuscated = false
+    optimization = org.teavm.gradle.api.OptimizationLevel.NONE
+    disassembly = true*/
 }
+
+/*tasks.disasmWasmGC {
+    html = false
+}*/
 
 tasks {
     register<Copy>("copyDist") {
         group = "build"
 
-        from("README.md", "LICENSE", "LICENSE-CFR", generateJavaScript, "cfr.d.ts")
+        from(
+            "README.md", "LICENSE", "LICENSE-CFR", "cfr.js", "cfr.d.ts",
+            generateWasmGC, copyWasmGCRuntime
+        )
         into("dist")
+
+        duplicatesStrategy = DuplicatesStrategy.INCLUDE
 
         doLast {
             file("dist/package.json").writeText(
@@ -61,5 +72,9 @@ tasks {
 
     build {
         dependsOn("copyDist")
+    }
+
+    clean {
+        delete("dist")
     }
 }

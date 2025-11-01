@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.List;
 
 public final class OutputSinkFactoryImpl implements OutputSinkFactory {
-    private Throwable exception;
+    private Exception exception;
     private String output;
 
     @Override
@@ -36,7 +36,7 @@ public final class OutputSinkFactoryImpl implements OutputSinkFactory {
         return this.output;
     }
 
-    public String outputOrThrow() throws Throwable {
+    public String outputOrThrow() throws Exception {
         if (this.exception != null) {
             throw this.exception;
         }

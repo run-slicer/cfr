@@ -24,7 +24,6 @@ import org.teavm.classlib.java.util.THashMap;
 import org.teavm.classlib.java.util.TMap;
 import org.teavm.classlib.java.util.logging.TLevel;
 import org.teavm.classlib.java.util.logging.TLogRecord;
-import org.teavm.jso.JSBody;
 
 // changes: implemented #isLoggable, #setLevel, #addHandler and #setUseParentHandlers
 public class TLogger {
@@ -75,11 +74,11 @@ public class TLogger {
             }
         } else {
             if (record.getLevel().intValue() >= TLevel.SEVERE.intValue()) {
-                error(message);
+                System.err.println(message);
             } else if (record.getLevel().intValue() >= TLevel.WARNING.intValue()) {
-                warn(message);
+                System.err.println(message);
             } else {
-                infoImpl(message);
+                System.out.println(message);
             }
         }
     }
@@ -296,22 +295,4 @@ public class TLogger {
 
     public void setUseParentHandlers(boolean useParentHandlers) {
     }
-
-    @JSBody(params = "message", script = ""
-            + "if (console) {"
-            + "console.info(message);"
-            + "}")
-    private static native void infoImpl(String message);
-
-    @JSBody(params = "message", script = ""
-            + "if (console) {"
-            + "console.warn(message);"
-            + "}")
-    private static native void warn(String message);
-
-    @JSBody(params = "message", script = ""
-            + "if (console) {"
-            + "console.error(message);"
-            + "}")
-    private static native void error(String message);
 }
