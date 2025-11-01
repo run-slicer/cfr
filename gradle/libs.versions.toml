@@ -1,6 +1,6 @@
 [versions]
 cfr = "0.152"
-teavm = "0.11.0"
+teavm = "0.13.0-dev-11"
 
 [libraries]
 cfr = { group = "org.benf", name = "cfr", version.ref = "cfr" }
