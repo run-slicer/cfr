@@ -3,7 +3,7 @@ plugins {
     alias(libs.plugins.teavm) // order matters?
 }
 
-val thisVersion = "0.1.5"
+val thisVersion = "0.1.6"
 
 group = "run.slicer"
 version = "$thisVersion-${libs.versions.cfr.get()}"
@@ -11,6 +11,7 @@ description = "A JavaScript port of the CFR decompiler."
 
 repositories {
     mavenCentral()
+    mavenLocal()
     maven("https://teavm.org/maven/repository")
 }
 
